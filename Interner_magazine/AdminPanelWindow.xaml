@@ -1,0 +1,311 @@
+﻿<Window x:Class="Interner_magazine.AdminPanelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Interner_magazine"
+        Title="Админ-панель" Height="700" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#FFFFFF">
+
+    <Window.Resources>
+        <local:ImagePathConverter x:Key="ImagePathConverter"/>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель -->
+        <Grid Grid.Row="0" Margin="0,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Панель администратора" 
+                     FontSize="28" FontWeight="Light" Foreground="#333333"/>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <TextBlock Text="Администратор: " Foreground="#555555" Margin="0,0,4,0"/>
+                <TextBlock x:Name="txtAdminInfo" Foreground="#1E90FF"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Вкладки -->
+        <TabControl Grid.Row="1" BorderThickness="0" Margin="0,0,0,24" Background="Transparent">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Padding" Value="16,8"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="#555555"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="#1E90FF"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                            <Setter Property="BorderBrush" Value="#1E90FF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Header="Товары">
+                <Grid Margin="0,16,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Панель управления товарами -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+                        <Button x:Name="btnAddProduct" Content="Добавить" Padding="16,8" Margin="0,0,8,0"
+                                Background="#1E90FF" Foreground="White" BorderThickness="0"
+                                Click="btnAddProduct_Click"/>
+                        <Button x:Name="btnEditProduct" Content="Изменить" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnEditProduct_Click"/>
+                        <Button x:Name="btnDeleteProduct" Content="Удалить" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnDeleteProduct_Click"/>
+                        <Button x:Name="btnRefreshProducts" Content="Обновить" Padding="16,8"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnRefreshProducts_Click"/>
+                    </StackPanel>
+
+                    <!-- Таблица товаров с явно заданными колонками -->
+                    <Border Grid.Row="1" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4">
+                        <DataGrid x:Name="dgProducts" AutoGenerateColumns="False" IsReadOnly="True"
+                                  BorderThickness="0" Background="Transparent" GridLinesVisibility="None"
+                                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" 
+                                  SelectionChanged="dgProducts_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding ProductId}" Width="Auto"/>
+                                <DataGridTextColumn Header="Название" Binding="{Binding NameProduct}" Width="*"/>
+                                <DataGridTextColumn Header="Цена" Binding="{Binding PriceProduct, StringFormat='{}{0:N2} ₽'}" Width="Auto"/>
+                                <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="Auto"/>
+                                <DataGridTextColumn Header="Категория" Binding="{Binding CategoryName}" Width="*"/>
+                                <DataGridTextColumn Header="Производитель" Binding="{Binding ManufacturerName}" Width="*"/>
+                                <DataGridTextColumn Header="Характеристики" Binding="{Binding Characteristic}" Width="*"/>
+
+                                <!-- Колонка для изображения -->
+                                <DataGridTemplateColumn Header="Изображение" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Width="50" Height="50" 
+                   Source="{Binding ImagePath, Converter={StaticResource ImagePathConverter}}" 
+                   Stretch="UniformToFill">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Source" Value="{Binding ImagePath, Converter={StaticResource ImagePathConverter}}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger 
+                                                                Binding="{Binding ImagePath}" Value="{x:Null}">
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Пользователи">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Панель управления пользователями -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button x:Name="btnBlockUser" Content="Блокировать" Padding="16,8" Margin="0,0,8,0"
+                                Background="#1E90FF" Foreground="White" BorderThickness="0"
+                                Click="btnBlockUser_Click"/>
+                        <Button x:Name="btnUnblockUser" Content="Разблокировать" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnUnblockUser_Click"/>
+                        <Button x:Name="btnDeleteUser" Content="Удалить" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnDeleteUser_Click"/>
+                        <Button x:Name="btnRefreshUsers" Content="Обновить" Padding="16,8"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnRefreshUsers_Click"/>
+                    </StackPanel>
+
+                    <!-- Список пользователей -->
+                    <DataGrid Grid.Row="1" x:Name="dgUsers" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding UserId}" Width="Auto"/>
+                            <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="*"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="Auto"/>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="Auto"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="Auto"/>
+                            <DataGridCheckBoxColumn Header="Активен" Binding="{Binding IsActive}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Заказы">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Панель управления заказами -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button x:Name="btnViewOrderDetails" Content="Просмотр деталей" Padding="16,8" Margin="0,0,8,0"
+                                Background="#1E90FF" Foreground="White" BorderThickness="0" 
+                                Click="btnViewOrderDetails_Click"/>
+                        <Button x:Name="btnUpdateOrderStatus" Content="Обновить статус" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1" BorderBrush="#E0E0E0"
+                                Click="btnUpdateOrderStatus_Click"/>
+                        <Button x:Name="btnDeleteOrder" Content="Удалить" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1" BorderBrush="#E0E0E0"
+                                Click="btnDeleteOrder_Click"/>
+                        <Button x:Name="btnRefreshOrders" Content="Обновить" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1" BorderBrush="#E0E0E0"
+                                Click="btnRefreshOrders_Click"/>
+                        <Button x:Name="btnExportOrderToPdf" Content="Экспорт в PDF" Padding="16,8" Margin="0,0,8,0"
+                                Background="Transparent" Foreground="#555555" BorderThickness="1" BorderBrush="#E0E0E0" 
+                                Click="btnExportOrderToPdf_Click"/>
+                    </StackPanel>
+
+                    <!-- Список заказов -->
+                    <DataGrid Grid.Row="1" x:Name="dgOrders" AutoGenerateColumns="False" IsReadOnly="True" 
+                              SelectionMode="Single" SelectionChanged="dgOrders_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding OrderId}" Width="Auto"/>
+                            <DataGridTextColumn Header="Пользователь" Binding="{Binding UserName}" Width="*"/>
+                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding OrderDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="Auto"/>
+                            <DataGridTextColumn Header="Адрес доставки" Binding="{Binding DeliveryAddress}" Width="Auto"/>
+                            <DataGridTextColumn Header="Метод доставки" Binding="{Binding DeliveryMethod}" Width="Auto"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <TextBlock Grid.Row="2" Text="Товары в заказе:" Margin="0,10,0,5" FontWeight="Bold"/>
+
+                    <!-- Список товаров в заказе -->
+                    <DataGrid Grid.Row="3" x:Name="dgOrderProducts" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ProductId}" Width="Auto"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding ProductName}" Width="*"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat='{}{0:N2}'}" Width="Auto"/>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="Auto"/>
+                            <DataGridTextColumn Header="Сумма" Binding="{Binding TotalPrice, StringFormat='{}{0:N2}'}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Категории">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Панель управления категориями -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button x:Name="btnAddCategory" Content="Добавить" Width="90" Margin="0,0,5,0" 
+                                Padding="16,8" Background="#1E90FF" Foreground="White" BorderThickness="0"
+                                Click="btnAddCategory_Click"/>
+                        <Button x:Name="btnEditCategory" Content="Изменить" Width="90" Margin="0,0,5,0" 
+                                Padding="16,8" Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnEditCategory_Click"/>
+                        <Button x:Name="btnDeleteCategory" Content="Удалить" Width="80" 
+                                Padding="16,8" Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnDeleteCategory_Click"/>
+                    </StackPanel>
+
+                    <!-- Список категорий -->
+                    <DataGrid Grid.Row="1" x:Name="dgCategories" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding CategoryId}" Width="Auto"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding NameCategory}" Width="*"/>
+                            <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Производители">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Панель управления производителями -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button x:Name="btnAddManufacturer" Content="Добавить" Width="90" Margin="0,0,5,0" 
+                                Padding="16,8" Background="#1E90FF" Foreground="White" BorderThickness="0"
+                                Click="btnAddManufacturer_Click"/>
+                        <Button x:Name="btnEditManufacturer" Content="Изменить" Width="90" Margin="0,0,5,0" 
+                                Padding="16,8" Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnEditManufacturer_Click"/>
+                        <Button x:Name="btnDeleteManufacturer" Content="Удалить" Width="80" 
+                                Padding="16,8" Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnDeleteManufacturer_Click"/>
+                    </StackPanel>
+
+                    <!-- Список производителей -->
+                    <DataGrid Grid.Row="1" x:Name="dgManufacturers" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ManufacturerId}" Width="Auto"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding NameManufacturer}" Width="*"/>
+                            <DataGridTextColumn Header="Страна" Binding="{Binding CountryName}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Страны">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Панель управления странами -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button x:Name="btnAddCountry" Content="Добавить" Width="90" Margin="0,0,5,0" 
+                                Padding="16,8" Background="#1E90FF" Foreground="White" BorderThickness="0"
+                                Click="btnAddCountry_Click"/>
+                        <Button x:Name="btnEditCountry" Content="Изменить" Width="90" Margin="0,0,5,0" 
+                                Padding="16,8" Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnEditCountry_Click"/>
+                        <Button x:Name="btnDeleteCountry" Content="Удалить" Width="80" 
+                                Padding="16,8" Background="Transparent" Foreground="#555555" BorderThickness="1"
+                                BorderBrush="#E0E0E0" Click="btnDeleteCountry_Click"/>
+                    </StackPanel>
+
+                    <!-- Список стран -->
+                    <DataGrid Grid.Row="1" x:Name="dgCountries" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding CountryId}" Width="Auto"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding NameCountry}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Кнопка выхода -->
+        <Button Grid.Row="2" x:Name="btnLogout" Content="Выйти" HorizontalAlignment="Right"
+                Padding="24,10" Background="Transparent" Foreground="#555555" 
+                BorderThickness="1" BorderBrush="#E0E0E0" Click="btnLogout_Click"/>
+    </Grid>
+</Window>

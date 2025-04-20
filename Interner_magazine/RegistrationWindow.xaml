@@ -1,0 +1,73 @@
+﻿<Window x:Class="Interner_magazine.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Регистрация" Height="680" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#FFFFFF">
+
+    <Border Margin="24" CornerRadius="8" Padding="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок -->
+            <TextBlock Grid.Row="0" Text="Регистрация" 
+                     FontSize="24" FontWeight="Light" Margin="0,0,0,32"
+                     HorizontalAlignment="Left" Foreground="#333333"/>
+
+            <!-- Форма регистрации -->
+            <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                <!-- Логин -->
+                <TextBlock Text="Логин" Margin="0,0,0,8" Foreground="#555555"/>
+                <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Margin="0,0,0,16">
+                    <TextBox x:Name="txtLogin" BorderThickness="0" Padding="12,10" 
+                           Background="Transparent"/>
+                </Border>
+
+                <!-- Пароль -->
+                <TextBlock Text="Пароль" Margin="0,0,0,8" Foreground="#555555"/>
+                <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Margin="0,0,0,16">
+                    <PasswordBox x:Name="txtPassword" BorderThickness="0" Padding="12,10" 
+                               Background="Transparent"/>
+                </Border>
+
+                <!-- Имя -->
+                <TextBlock Text="Имя" Margin="0,0,0,8" Foreground="#555555"/>
+                <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Margin="0,0,0,16">
+                    <TextBox x:Name="txtFirstName" BorderThickness="0" Padding="12,10" 
+                           Background="Transparent"/>
+                </Border>
+
+                <!-- Фамилия -->
+                <TextBlock Text="Фамилия" Margin="0,0,0,8" Foreground="#555555"/>
+                <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Margin="0,0,0,16">
+                    <TextBox x:Name="txtLastName" BorderThickness="0" Padding="12,10" 
+                           Background="Transparent"/>
+                </Border>
+
+                <!-- Телефон -->
+                <TextBlock Text="Телефон" Margin="0,0,0,8" Foreground="#555555"/>
+                <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Margin="0,0,0,24">
+                    <TextBox x:Name="txtPhone" BorderThickness="0" Padding="12,10" 
+                           Background="Transparent"/>
+                </Border>
+
+                <!-- Кнопки -->
+                <Button x:Name="btnRegister" Content="Зарегистрироваться" Padding="0,12" Margin="0,0,0,16"
+                      Background="#1E90FF" Foreground="White" BorderThickness="0"
+                      Click="btnRegister_Click"/>
+
+                <Button x:Name="btnCancel" Content="Отмена" Padding="0,12"
+                      Background="Transparent" Foreground="#555555" BorderThickness="0"
+                      Click="btnCancel_Click"/>
+            </StackPanel>
+
+            <!-- Сообщение об ошибке -->
+            <TextBlock Grid.Row="2" x:Name="txtError" Foreground="#E53935" Margin="0,16,0,0"
+                     TextWrapping="Wrap" HorizontalAlignment="Center"/>
+        </Grid>
+    </Border>
+</Window>
