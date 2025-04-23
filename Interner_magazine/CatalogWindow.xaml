@@ -103,48 +103,46 @@
 
             <!-- Корзина -->
             <TabItem Header="Корзина">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <TextBlock Text="Ваша корзина" FontSize="24" FontWeight="Light" Foreground="#333333" Margin="0,0,0,16"/>
-                        <ListView x:Name="lvCart" BorderThickness="0" Background="Transparent">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="Margin" Value="0 5"/>
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Изображение" Width="80">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Border Width="60" Height="60" Background="#F5F5F5" CornerRadius="4"
-                                                        BorderBrush="#E0E0E0" BorderThickness="1">
-                                                    <Image Source="{Binding ImagePath, Converter={StaticResource ImagePathConverter}}" Stretch="UniformToFill"/>
-                                                </Border>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Название" Width="250" DisplayMemberBinding="{Binding Name}"/>
-                                    <GridViewColumn Header="Цена" Width="100" 
-                                                     DisplayMemberBinding="{Binding Price, StringFormat={}{0:N2} руб.}"/>
-                                    <GridViewColumn Header="Количество" Width="80" DisplayMemberBinding="{Binding Quantity}"/>
-                                    <GridViewColumn Header="Сумма" Width="100" 
-                                                     DisplayMemberBinding="{Binding TotalPrice, StringFormat={}{0:N2} руб.}"/>
-                                    <GridViewColumn Header="Действия" Width="100">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="Удалить" Click="RemoveFromCart_Click"
-                                                        Padding="8 4" Background="#FF6B6B" Foreground="White"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </StackPanel>
-                </ScrollViewer>
+                <StackPanel>
+                    <TextBlock Text="Ваша корзина" FontSize="24" FontWeight="Light" Foreground="#333333" Margin="0,0,0,16"/>
+                    <ListView x:Name="lvCart" BorderThickness="0" Background="Transparent">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0 5"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Изображение" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Width="60" Height="60" Background="#F5F5F5" CornerRadius="4"
+                                                    BorderBrush="#E0E0E0" BorderThickness="1">
+                                                <Image Source="{Binding ImagePath, Converter={StaticResource ImagePathConverter}}" Stretch="UniformToFill"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Название" Width="250" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Цена" Width="100" 
+                                                 DisplayMemberBinding="{Binding Price, StringFormat={}{0:N2} руб.}"/>
+                                <GridViewColumn Header="Количество" Width="80" DisplayMemberBinding="{Binding Quantity}"/>
+                                <GridViewColumn Header="Сумма" Width="100" 
+                                                 DisplayMemberBinding="{Binding TotalPrice, StringFormat={}{0:N2} руб.}"/>
+                                <GridViewColumn Header="Действия" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Удалить" Click="RemoveFromCart_Click"
+                                                    Padding="8 4" Background="#FF6B6B" Foreground="White"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
             </TabItem>
         </TabControl>
 

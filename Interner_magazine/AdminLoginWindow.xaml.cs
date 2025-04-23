@@ -17,8 +17,9 @@ namespace Interner_magazine
         {
             string login = txtAdminLogin.Text;
             string password = txtAdminPassword.Password;
+            string phone = txtAdminPhone.Text;
 
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(phone))
             {
                 txtError.Text = "Пожалуйста, заполните все поля";
                 return;
@@ -30,11 +31,12 @@ namespace Interner_magazine
                 {
                     connection.Open();
 
-                    string query = "SELECT adminid, firstnameadmin, lastnameadmin FROM public.admin WHERE loginadmin = @login AND passwordadmin = @password";
+                    string query = "SELECT adminid, firstnameadmin, lastnameadmin FROM public.admin WHERE loginadmin = @login AND passwordadmin = @password AND phoneadmin = @phone";
                     using (var command = new NpgsqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@login", login);
                         command.Parameters.AddWithValue("@password", password);
+                        command.Parameters.AddWithValue("@phone", phone);
 
                         using (var reader = command.ExecuteReader())
                         {
@@ -51,7 +53,7 @@ namespace Interner_magazine
                             }
                             else
                             {
-                                txtError.Text = "Неверный логин или пароль администратора";
+                                txtError.Text = "Неверный логин, пароль или телефон администратора";
                             }
                         }
                     }
