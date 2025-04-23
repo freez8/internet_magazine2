@@ -9,10 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="7343418-middle.png" />
+    <None Remove="f0f0f4308ef3e8db119872375dc2993e.png" />
+    <None Remove="photo_2024-09-12_23-13-28.jpg" />
+    <None Remove="SJbYbY5HB449HAJNVmOB_14_c848064a510d8ac18ca9bbff5d902dff_avatar_full.png" />
+    <None Remove="Vente-en-ligne.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
     <PackageReference Include="Npgsql" Version="9.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="PDFsharp" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="7343418-middle.png" />
+    <Resource Include="f0f0f4308ef3e8db119872375dc2993e.png" />
+    <Resource Include="photo_2024-09-12_23-13-28.jpg" />
+    <Resource Include="SJbYbY5HB449HAJNVmOB_14_c848064a510d8ac18ca9bbff5d902dff_avatar_full.png" />
+    <Resource Include="Vente-en-ligne.png" />
   </ItemGroup>
 
 </Project>

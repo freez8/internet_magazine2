@@ -12,7 +12,7 @@ namespace Interner_magazine
     internal class DatabaseConnection
     {
 
-            private string connectionString = "Server=localhost;Port=5432;Database=Internet_magazine;User Id=postgres;Password=FreeZ231";
+            private string connectionString = "Server=localhost;Port=5432;Database=internet_magazine;User Id=postgres;Password=admin10";
 
             public NpgsqlConnection GetConnection()
             {

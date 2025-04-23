@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Вход для администратора" Height="450" Width="350"
         WindowStartupLocation="CenterScreen"
-        Background="#FFFFFF">
+        Background="#FFFFFF" Icon="/SJbYbY5HB449HAJNVmOB_14_c848064a510d8ac18ca9bbff5d902dff_avatar_full.png">
 
     <Border Margin="24" CornerRadius="8" Padding="0">
         <Grid>

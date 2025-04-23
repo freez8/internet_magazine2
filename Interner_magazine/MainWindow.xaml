@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Вход" Height="500" Width="350"
         WindowStartupLocation="CenterScreen"
-        Background="#FFFFFF">
+        Background="#FFFFFF" Icon="/Vente-en-ligne.png">
 
     <Border Margin="24" CornerRadius="8" Padding="0">
         <Grid>
