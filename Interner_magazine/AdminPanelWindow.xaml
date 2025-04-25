@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Interner_magazine"
-        Title="Админ-панель" Height="700" Width="1100"
+        Title="Админ-панель"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Background="#FFFFFF" Icon="/photo_2024-09-12_23-13-28.jpg">
 
