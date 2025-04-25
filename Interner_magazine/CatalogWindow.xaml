@@ -2,9 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Interner_magazine"
-        Title="Каталог" Height="700" Width="1000"
+        Title="Каталог"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Background="#FFFFFF" Icon="/7343418-middle.png">
+
 
     <Window.Resources>
         <local:ImagePathConverter x:Key="ImagePathConverter"/>
