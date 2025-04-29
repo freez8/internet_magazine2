@@ -172,25 +172,50 @@ namespace Interner_magazine
             CalculateTotalSum();
         }
 
+        private void UpdateCartCount()
+        {
+            int totalItems = cartItems.Sum(c => c.Quantity);
+            string itemText;
+            if (totalItems == 1)
+                itemText = "товар";
+            else if (totalItems >= 2 && totalItems <= 4)
+                itemText = "товара";
+            else
+                itemText = "товаров";
+            txtCartCount.Text = $"{totalItems} {itemText}";
+        }
+
         private void CalculateTotalSum()
         {
             // Сумма товаров
             _totalSum = cartItems.Sum(c => c.Price * c.Quantity);
 
-            // Добавляем стоимость доставки
+            // Количество товаров
+            int totalItems = cartItems.Sum(c => c.Quantity);
+
+            // Стоимость доставки
+            decimal deliveryCost = 0;
             if (cmbDeliveryMethod.SelectedItem != null)
             {
                 var selectedItem = cmbDeliveryMethod.SelectedItem as ComboBoxItem;
                 if (selectedItem != null)
                 {
                     if (selectedItem.Content.ToString() == "Почтой")
-                        _totalSum += 100; // Стоимость почтовой доставки
+                        deliveryCost = 100; // Стоимость почтовой доставки
                     else if (selectedItem.Content.ToString() == "Доставка курьером")
-                        _totalSum += 500; // Стоимость курьерской доставки
+                        deliveryCost = 500; // Стоимость курьерской доставки
+                                            // Самовывоз = 0 (по умолчанию)
                 }
             }
 
-            txtTotalSum.Text = $"{_totalSum:N2} руб.";
+            // Итоговая сумма (товары + доставка)
+            decimal finalSum = _totalSum + deliveryCost;
+
+            // Обновляем текстовые поля
+            txtItemsCount.Text = totalItems.ToString();
+            txtDeliveryPrice.Text = $"{deliveryCost:N2} руб.";
+            txtTotalSum.Text = $"{finalSum:N2} руб.";
+            txtFinalSum.Text = $"{finalSum:N2} руб.";
         }
 
         private void btnMakeOrder_Click(object sender, RoutedEventArgs e)
@@ -322,7 +347,11 @@ namespace Interner_magazine
             lvProducts.UnselectAll();
             txtDeliveryAddress.Clear();
             cmbDeliveryMethod.SelectedIndex = 0;
-            txtTotalSum.Text = "0.00р";
+            txtTotalSum.Text = "0.00 руб.";
+            txtItemsCount.Text = "0";
+            txtDeliveryPrice.Text = "0.00 руб.";
+            txtFinalSum.Text = "0.00 руб.";
+            UpdateCartCount(); // Update cart count
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -387,6 +416,7 @@ namespace Interner_magazine
             lvCart.ItemsSource = null;
             lvCart.ItemsSource = cartItems;
             CalculateTotalSum();
+            UpdateCartCount(); // Add this line
         }
 
         private void RemoveFromCart_Click(object sender, RoutedEventArgs e)
@@ -414,6 +444,7 @@ namespace Interner_magazine
                 lvCart.ItemsSource = null;
                 lvCart.ItemsSource = cartItems;
                 CalculateTotalSum();
+                UpdateCartCount(); // Add this line
             }
         }
 
